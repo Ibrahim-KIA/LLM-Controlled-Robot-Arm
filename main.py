@@ -33,7 +33,12 @@ def command_thread(agent):
                 continue
                 
             print("[Agent] Processing command...")
-            parsed = agent.get_target_coordinates(command)
+            
+            # Use the last known target as current position, or resting default if none
+            with position_lock:
+                current_coords = target_position["coords"] if target_position else [0.5, 0.0, 0.3]
+                
+            parsed = agent.get_target_coordinates(command, current_coords)
             
             if parsed:
                 coords = parsed["coords"]

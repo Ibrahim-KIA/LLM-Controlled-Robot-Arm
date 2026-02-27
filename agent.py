@@ -19,7 +19,7 @@ class SpatialReasoningAgent:
             print(f"Error initializing Groq client: {e}")
             self.client = None
 
-    def get_target_coordinates(self, user_prompt):
+    def get_target_coordinates(self, user_prompt, current_coords):
         """Sends the user prompt to Llama 3.3 and parses the returned JSON target coordinates."""
         if not self.client:
             print("Groq client not initialized. Cannot process command.")
@@ -34,7 +34,8 @@ class SpatialReasoningAgent:
         - Y (Left/Right): {WORKSPACE_BOUNDS['Y'][0]} to {WORKSPACE_BOUNDS['Y'][1]}
         - Z (Up/Down): {WORKSPACE_BOUNDS['Z'][0]} to {WORKSPACE_BOUNDS['Z'][1]}
         
-        A typical resting position is roughly X=0.5, Y=0.0, Z=0.3.
+        The robot's CURRENT location is: X={current_coords[0]:.3f}, Y={current_coords[1]:.3f}, Z={current_coords[2]:.3f}.
+        Apply any relative movements strictly relative to these exact current coordinates.
         
         CRITICAL RULES:
         1. Output strictly valid JSON and nothing else. Do not use markdown blocks (e.g., no ```json ... ```).
