@@ -41,6 +41,8 @@ class SpatialReasoningAgent:
         2. Ensure the coordinates strictly fall within the provided workspace boundaries. If a command implies moving outside these bounds, constrain the target to the nearest boundary edge.
         3. The JSON must follow exactly this format: {{"x": float, "y": float, "z": float, "grip": int}}
         4. The "grip" parameter represents the gripper state: 0 for closed (grabbing), 1 for open (releasing).
+        5. DO NOT output multi-line mathematical expressions or formulas inside the JSON. Do the math internally and only output the final computed float values.
+        6. If the user gives a multi-step command (e.g. "go down, close grip, then go up"), output ONLY the FINAL intended coordinate and grip state at the end of their logic.
         """
 
         try:
